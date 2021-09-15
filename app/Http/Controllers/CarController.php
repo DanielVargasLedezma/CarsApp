@@ -14,8 +14,9 @@ class CarController extends Controller
      */
     public function index()
     {
-        $cars = Car::all();
-       
+        $cars = Car::all()->toJson();
+
+        $cars = json_decode($cars);
         // dd($cars);
 
         return view('cars.index', [
@@ -66,7 +67,9 @@ class CarController extends Controller
      */
     public function show($id)
     {
-        //
+        $car = Car::find($id);
+
+        return view('cars.show')->with('car', $car);
     }
 
     /**
@@ -111,7 +114,7 @@ class CarController extends Controller
         Car::first()
             ->find($id)
             ->delete();
-        
+
         return redirect('/cars');
     }
 }
