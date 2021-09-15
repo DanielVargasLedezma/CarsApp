@@ -13,11 +13,11 @@ class Car extends Model
 
     protected $primaryKey = 'id';
 
-    protected $fillable = ['name', 'founded', 'description'];
+    protected $fillable = ['name', 'founded', 'description', 'image_path'];
 
     protected $hidden = ['created_at', 'edited_at'];
 
-    protected  $visible = ['name', 'founded', 'description', 'id'];
+    protected  $visible = ['name', 'founded', 'description', 'id', 'image_path'];
 
     public  function carModels()
     {
@@ -42,5 +42,10 @@ class Car extends Model
             'car_id',
             'model_id'
         );
+    }
+
+    public function products()
+    {
+        return $this->belongsToMany(Product::class);
     }
 }

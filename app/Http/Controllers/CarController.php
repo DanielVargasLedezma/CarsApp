@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Car;
+use App\Http\Requests\CreateValidationRequest;
 
 class CarController extends Controller
 {
@@ -40,7 +41,7 @@ class CarController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateValidationRequest $request)
     {
         // $car = new Car;
 
@@ -50,10 +51,39 @@ class CarController extends Controller
 
         // $car->save();
 
+        // $request->validate([
+        //     'name' => 'required|unique:cars',
+        //     'founded' => 'required|integer|min:0|max:2021',
+        //     'description' => 'required'
+        // ]);
+
+        /*
+        Methods that can be used on $request->file('image')->
+        guessExtension()
+        getMimeType()
+        store()
+        asStore()
+        storePublicly()
+        move()
+        getClientOriginalName()
+        getClientMimeType()
+        guessClienteExtension()
+        getSize()
+        getError()
+        isValid()
+        */
+        
+        $request->validated();
+
+        $newImageName = time() . '-' . $request->name . '-' . $request->image->extension();
+
+        $request->image->move(public_path('images'), $newImageName);
+
         Car::create([
             'name' => $request->input('name'),
             'founded' => $request->input('founded'),
-            'description' => $request->input('description')
+            'description' => $request->input('description'),
+            'image_path' => $newImageName
         ]);
 
         return redirect('/cars');
@@ -91,8 +121,10 @@ class CarController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CreateValidationRequest $request, $id)
     {
+        $request->validated();
+
         Car::where('id', $id)
             ->update([
                 'name' => $request->input('name'),

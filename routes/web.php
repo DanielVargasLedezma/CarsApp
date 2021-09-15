@@ -14,4 +14,7 @@ use App\Http\Controllers\CarController;
 |
 */
 
-Route::resource('/cars', CarController::class);
+Route::resource('/cars', CarController::class);Auth::routes();
+
+Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
