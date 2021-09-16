@@ -5,15 +5,21 @@
     <div class="py-10 text-center">
         @if ($car)
             <div class="text-center">
-                @if (is_null($car->image_path) === false)
-                    <img 
-                        src="{{ asset('images/' . $car->image_path) }}" 
-                        class="w-8/12 mb-8 shadow-xl"
-                        alt="{{ $car->name }}">
-                @endif
-                <h1 class="text-5xl uppercase bold">
-                    {{ $car->name }}
-                </h1>
+                <ul class="inline">
+                    <li class="list-none">
+                        @if (is_null($car->image_path) === false)
+                            <img 
+                                src="{{ asset('images/' . $car->image_path) }}" 
+                                class="w-12/8 mb-8 shadow-xl"
+                                alt="{{ $car->name }}">
+                        @endif
+                    </li>
+                    <li class="list-none">
+                        <h1 class="text-5xl uppercase bold">
+                            {{ $car->name }}
+                        </h1>
+                    </li>
+                </ul>
             </div>
 
             <div class="m-auto">
